@@ -1,12 +1,35 @@
 import { defineStore } from 'pinia'
 import api from '@/api'
 
+interface User {
+  id: number
+  name: string
+  email: string
+  role: string
+  // añade aquí otros campos que devuelva tu API
+}
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null,
+    user: null as User | null,
     token: localStorage.getItem('token') || null,
   }),
   actions: {
+    async fetchUser() {
+      // previene que al recargar se pierdan los datos del usuario
+      if (!this.token) return
+
+      try {
+        // PASO B: La llamada de verificación
+        const { data } = await api.get('/user')
+
+        // PASO C: La hidratación del estado
+        this.user = data
+      } catch (error) {
+        // PASO D: El plan de emergencia
+        this.logout()
+      }
+    },
     async login(credentials: any) {
       const response = await api.post('/login', credentials)
       this.token = response.data.token
@@ -18,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
 
     async register(userData: any) {
       // 1. Enviamos todos los datos (nombre, email, password, etc.) a Laravel
-      const { data } = await api.post('/register', userData)
+      const { data } = await api.post('register', userData)
 
       // 2. Laravel, si todo va bien, nos devuelve el usuario creado y su TOKEN
       this.token = data.token

@@ -21,9 +21,9 @@ const handleRegister = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async (valid) => {
     if (valid) {
+      loading.value = true
       try {
         await auth.register(registerForm)
-        loading.value = true
         router.push('/')
       } catch (error) {
         console.error('Error de login')
@@ -72,6 +72,9 @@ const rules = reactive<FormRules>({
       >
         <el-form-item label="Nombre" prop="name">
           <el-input v-model="registerForm.name" type="text" />
+        </el-form-item>
+        <el-form-item label="Email" prop="email">
+          <el-input v-model="registerForm.email" type="email" />
         </el-form-item>
         <el-form-item label="Contraseña" prop="password">
           <el-input v-model="registerForm.password" type="password" show-password />

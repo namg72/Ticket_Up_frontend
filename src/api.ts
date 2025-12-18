@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useAuthStore } from '@/stores/auth'
 
 const api = axios.create({
   baseURL: 'http://localhost/api', // Ajusta a la URL de tu Laravel
@@ -21,11 +22,11 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       console.warn('Token expirado o inválido. Redirigiendo al login...')
 
-      // Limpiamos el token para que el Router Guard no nos deje entrar
-      localStorage.removeItem('token')
+      const auth = useAuthStore()
 
-      // Redirigimos al usuario al login
-      window.location.href = '/login'
+      console.warn('Sesión expirada. Limpiando datos...')
+
+      auth.logout() // Esto limpia Pinia y LocalStorage
     }
     return Promise.reject(error)
   },
