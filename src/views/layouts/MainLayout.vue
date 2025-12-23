@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { ArrowDown } from '@element-plus/icons-vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -22,12 +23,6 @@ const handleLogout = () => {
       >
         <div class="flex items-center gap-8">
           <div class="font-bold text-primary text-xl tracking-tight">TickeUP</div>
-
-          <nav class="hidden md:flex gap-4">
-            <router-link to="/" class="text-sm font-medium text-gray-600 hover:text-primary">
-              Panel
-            </router-link>
-          </nav>
         </div>
 
         <div class="flex items-center">
@@ -59,12 +54,37 @@ const handleLogout = () => {
           </el-dropdown>
         </div>
       </el-header>
-
-      <el-main>
-        <div class="mx-auto max-w-7xl">
-          <router-view />
+      <div class="bg-white border-b border-gray-200 h-20">
+        <div class="w-[80%] mx-auto h-full flex items-center justify-start">
+          <nav class="hidden md:flex gap-8">
+            <router-link
+              to="/"
+              class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out h-full"
+              active-class="border-indigo-400 text-gray-900 focus:border-indigo-700"
+            >
+              Panel
+            </router-link>
+            <router-link
+              to="/users"
+              class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out h-full"
+              active-class="border-indigo-400 text-gray-900 focus:border-indigo-700"
+            >
+              Gestión de usuarios
+            </router-link>
+            <router-link
+              to="/categories"
+              class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out h-full"
+              active-class="border-indigo-400 text-gray-900 focus:border-indigo-700"
+            >
+              Gestión de Gastos
+            </router-link>
+          </nav>
         </div>
-      </el-main>
+      </div>
+
+      <main class="py-10 bg-gray-100 min-h-screen">
+        <div class="w-[80%] mx-auto"><router-view /></div>
+      </main>
     </el-container>
   </div>
 </template>

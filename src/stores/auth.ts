@@ -1,13 +1,6 @@
 import { defineStore } from 'pinia'
 import api from '@/api'
-
-interface User {
-  id: number
-  name: string
-  email: string
-  role: string
-  // añade aquí otros campos que devuelva tu API
-}
+import type { User } from '@/types/user'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({

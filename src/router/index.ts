@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth' // Importamos el store para el guard
 import LoginView from '@/views/login/LoginView.vue'
-import HomeView from '@/views/HomeView.vue'
+
 import RegisterView from '@/views/login/RegisterView.vue'
 import MainLayout from '@/views/layouts/MainLayout.vue'
+import PanelView from '@/views/pages/PanelView.vue'
+import UserView from '@/views/pages/UserView.vue'
+import CategoryView from '@/views/pages/CategoryView.vue'
+import TicketEdit from '@/views/pages/Tickets/TicketEdit.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,10 +19,26 @@ const router = createRouter({
       children: [
         {
           path: '', // La ruta base del padre (/)
-          name: 'home',
-          component: HomeView,
+          name: 'panel',
+          component: PanelView,
         },
-        // Aquí puedes añadir más hijos como /tickets, /profile, etc.
+        {
+          path: 'users',
+          name: 'users',
+          component: UserView,
+        },
+        {
+          path: 'categories',
+          name: 'categoris',
+          component: CategoryView,
+        },
+
+        {
+          path: 'ticket/:id/edit',
+          name: 'ticketEdit',
+          component: TicketEdit,
+          props: true,
+        },
       ],
     },
     {
